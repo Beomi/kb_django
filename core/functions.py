@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup as bs
 from dateutil import parser
 import pytz
 
-local_tz = pytz.timezone('Asia/Seoul')
+local_tz = pytz.timezone('UTC')
 
 def get_transactions(driver, bank, pw, birthday):
     driver.get('https://obank.kbstar.com/quics?page=C025255&cc=b028364:b028702')
