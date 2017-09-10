@@ -1,9 +1,13 @@
+import pytz
+
 from django.http import JsonResponse
 from django.conf import settings
 from django.utils import timezone
 from core.functions import get_balance
 
 from .models import Transaction
+
+local_tz = pytz.timezone('Asia/Seoul')
 
 def balance_json(request):
     transaction_list = get_balance(
@@ -22,7 +26,7 @@ def balance_json(request):
                 transaction_by=trs['transaction_by'],
             ).save()
         else:
-            if trs['date'] > latest_data.date:
+            if trs['date'].replace(tzinfo=local_tz) > latest_data.date:
                 Transaction(
                     date=trs['date'],
                     amount=trs['amount'],
