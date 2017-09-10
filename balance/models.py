@@ -19,4 +19,4 @@ class Transaction(TimeStampModel):
     transaction_by = models.CharField('거래소', max_length=200)
 
     def __str__(self):
-        return '{} {}'.format(self.transaction_by, self.balance)
+        return '{} : {}'.format(self.transaction_by, self.amount)

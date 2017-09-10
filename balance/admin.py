@@ -5,5 +5,5 @@ from .models import Transaction
 
 @admin.register(Transaction)
 class TransactionAdmin(admin.ModelAdmin):
-    fields = ('date', 'amount', 'balance', 'transaction_by', )
+    list_display = ('date', 'amount', 'balance', 'transaction_by', )
     ordering = ('-date', )
