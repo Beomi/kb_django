@@ -13,15 +13,20 @@ def balance_json(request):
         settings.BIRTHDAY
     )
     latest_data = Transaction.objects.last()
-    if not latest_data:
-        latest_data = {}
-        latest_data['date'] = timezone.now()
     for trs in transaction_list:
-        if trs['date'] > latest_data.date:
+        if not latest_data:
             Transaction(
                 date=trs['date'],
                 amount=trs['amount'],
                 balance=trs['balance'],
                 transaction_by=trs['transaction_by'],
             ).save()
+        else:
+            if trs['date'] > latest_data.date:
+                Transaction(
+                    date=trs['date'],
+                    amount=trs['amount'],
+                    balance=trs['balance'],
+                    transaction_by=trs['transaction_by'],
+                ).save()
     return JsonResponse(data=transaction_list)
