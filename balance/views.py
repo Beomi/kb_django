@@ -13,7 +13,7 @@ def balance_json(request):
         settings.BIRTHDAY
     )
     latest_data = Transaction.objects.last()
-    for trs in transaction_list:
+    for trs in reversed(transaction_list):
         if not latest_data:
             Transaction(
                 date=trs['date'],
@@ -29,4 +29,4 @@ def balance_json(request):
                     balance=trs['balance'],
                     transaction_by=trs['transaction_by'],
                 ).save()
-    return JsonResponse(data=transaction_list)
+    return JsonResponse(dict(data=transaction_list))
