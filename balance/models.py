@@ -17,3 +17,6 @@ class Transaction(TimeStampModel):
     amount = models.IntegerField('거래금액')
     balance = models.IntegerField('잔고')
     transaction_by = models.CharField('거래소', max_length=200)
+
+    def __str__(self):
+        return '{} {}'.format(self.transaction_by, self.balance)
