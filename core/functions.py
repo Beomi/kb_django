@@ -5,7 +5,9 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup as bs
 from dateutil import parser
+import pytz
 
+local_tz = pytz.timezone('Asia/Seoul')
 
 def get_transactions(driver, bank, pw, birthday):
     driver.get('https://obank.kbstar.com/quics?page=C025255&cc=b028364:b028702')
@@ -39,7 +41,7 @@ def get_balance(PATH, bank, pw, birthday):
         if not idx % 2:
             _date = tds[0].text
             _date = _date[:10] + ' ' + _date[10:]
-            date = parser.parse(_date)  # 날짜: datetime
+            date = parser.parse(_date).replace(tzinfo=local_tz)  # 날짜: datetime
             amount = -int(tds[3].text.replace(',', '')) or int(tds[4].text.replace(',', ''))  # 입금 / 출금액: int
             balance = int(tds[5].text.replace(',', ''))  # 잔고: int
             detail = dict(date=date, amount=amount, balance=balance)
