@@ -7,5 +7,3 @@ from .models import Transaction
 class TransactionAdmin(admin.ModelAdmin):
     fields = ('date', 'amount', 'balance', 'transaction_by', )
     ordering = '-date'
-
-admin.site.register(Transaction)
