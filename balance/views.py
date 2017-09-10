@@ -14,6 +14,7 @@ def balance_json(request):
     )
     latest_data = Transaction.objects.last()
     if not latest_data:
+        latest_data = {}
         latest_data['date'] = timezone.now()
     for trs in transaction_list:
         if trs['date'] > latest_data.date:
