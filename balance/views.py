@@ -1,5 +1,6 @@
 from django.http import JsonResponse
 from django.conf import settings
+from django.utils import timezone
 from core.functions import get_balance
 
 from .models import Transaction
@@ -12,8 +13,10 @@ def balance_json(request):
         settings.BIRTHDAY
     )
     latest_data = Transaction.objects.last()
+    if not latest_data:
+        latest_data['date'] = timezone.now()
     for trs in transaction_list:
-        if trs.date > latest_data.date:
+        if trs['date'] > latest_data.date:
             Transaction(
                 date=trs['date'],
                 amount=trs['amount'],
