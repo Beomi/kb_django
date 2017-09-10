@@ -18,7 +18,7 @@ def get_transactions(driver, bank, pw, birthday):
     submit_button.click()
     try:
         element = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.ID, "pop_contents"))
+            EC.presence_of_element_located((By.CSS_SELECTOR, "#pop_contents > table.tType01 > tbody > tr"))
         )
     finally:
         transactions = driver.find_elements_by_css_selector('#pop_contents > table.tType01 > tbody > tr')
