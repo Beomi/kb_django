@@ -1,5 +1,8 @@
 # coding: utf-8
 from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup as bs
 from dateutil import parser
 
@@ -13,7 +16,12 @@ def get_transactions(driver, bank, pw, birthday):
     driver.find_element_by_css_selector('#user_num').send_keys('{}'.format(birthday))
     driver.find_element_by_css_selector('#divPRO1 > span:nth-child(4) > input[type="button"]').click()
     submit_button.click()
-    transactions = driver.find_elements_by_css_selector('#pop_contents > table.tType01 > tbody > tr')
+    try:
+        element = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "pop_contents"))
+        )
+    finally:
+        transactions = driver.find_elements_by_css_selector('#pop_contents > table.tType01 > tbody > tr')
     return transactions
 
 
