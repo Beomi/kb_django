@@ -12,6 +12,7 @@ class Transaction(TimeStampModel):
     class Meta:
         verbose_name = '거래내역'
         verbose_name_plural = '거래내역'
+        ordering = ('-date', )
 
     date = models.DateTimeField('거래일시')
     amount = models.IntegerField('거래금액')
